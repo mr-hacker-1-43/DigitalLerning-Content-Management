@@ -1,31 +1,88 @@
-import Link from "next/link";
-import React from "react";
-// import AnimatedButton from './AnimatedButton';
-import ThemeChanger from './ThemeChanger'
+// components/Navbar.js
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
+import SearchModal from "@/components/SearchModel";
+import LoginButton from './AnimatedButton'
+import { FaSearch } from 'react-icons/fa';
+import ThemeChanger from './ThemeChangerBTN';
+import about from '../pages/about'
 
-const Navbar = () => {
+
+function Navbar() {
+
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const [isSearchModalOpen, setSearchModalOpen] = useState(false);
+  const openSearchModal = () => {
+    setSearchModalOpen(true);
+  };
+  const closeSearchModal = () => {
+    setSearchModalOpen(false);
+  };
+
   return (
-    <div className="sticky top-0 z-50 text-gray-600 body-font bg-transparent backdrop-blur-md border-b-2 border-b-pink-400">
-      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center ">
-        <Link href={'/'} className="flex title-font font-medium dark:dark:text-white items-center text-gray-900 md:mb-0">
-          <span className="ml-3 text-xl">Tailblocks</span>
-        </Link>
-        <div className="md:ml-auto flex flex-wrap items-center text-lg my-3 font-normal justify-center">
-          <Link href={'/'} className="mr-5 dark:bg-slate-500 dark:text-white rounded-md hover:text-gray-900 border-b-2 hover:border-pink-500 shadow-md p-1 px-2 ">Home</Link>
-          <Link href={'/about'} className="mr-5 dark:bg-slate-500 dark:text-white rounded-md hover:text-gray-900 border-b-2 hover:border-pink-500 shadow-md p-1 px-2 ">About</Link>
-          <Link href={'/blogs'} className="mr-5 dark:bg-slate-500 dark:text-white rounded-md hover:text-gray-900 border-b-2 hover:border-pink-500 shadow-md p-1 px-2 ">Blogs</Link>
-          <Link href={'/services'} className="mr-5 dark:bg-slate-500 dark:text-white rounded-md hover:text-gray-900 border-b-2 hover:border-pink-500 shadow-md p-1 px-2 ">Services</Link>
-          <Link href={'/contact'} className="mr-5 dark:bg-slate-500 dark:text-white rounded-md hover:text-gray-900 border-b-2 hover:border-pink-500 shadow-md p-1 px-2 ">Contact us</Link>
-        </div>
-        {/* <div className="bg-purple-300 rounded-lg "> */}
-          {/* <AnimatedButton buttonName={"Login"} /> */}
-          <ThemeChanger></ThemeChanger>
-          
-        {/* </div> */}
-      </div>
-    </div>
-  );
-};
 
+    <nav className="sticky top-0 text-gray-600 body-font z-20 select-none bg-transparent shadow-md dark:shadow-pink-200/30 shadow-pink-200 backdrop-blur-sm border-b-2 border-pink-400 ">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 ">
+          <div className="flex-shrink-0 ">
+            <Link href="/" className="dark:text-white text-xl font-bold"> Your Logo </Link>
+          </div>
+
+          <div className="hidden sm:block">
+            {/* Desktop navigation links */}
+            <div className="space-x-2">
+              <Link href="/" className="tracking-wide dark:text-white font-semibold text-lg  hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">Home</Link>
+              <Link href="/about" className="tracking-wide dark:text-white font-semibold text-lg hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">About</Link>
+              <Link href="/services" className="tracking-wide dark:text-white font-semibold text-lg hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">Services</Link>
+              <Link href="/strategies" className="tracking-wide dark:text-white font-semibold text-lg hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">Strategies</Link>
+              <Link href="/contact" className="tracking-wide dark:text-white font-semibold text-lg hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">Contact</Link>
+            </div>
+          </div>
+          <div className='flex my-auto' >
+            <span className='mt-auto'>
+              <button className=" py-2 px-2 text-2xl roundedn dark:text-white dark:hover:text-pink-400 hover:text-pink-400" onClick={openSearchModal}>
+                <FaSearch />
+              </button>
+              <SearchModal className='' isOpen={isSearchModalOpen} onClose={closeSearchModal} />
+            </span>
+            <span className='mx-2 mt-1.5 dark:text-white'>
+              <Link href={"/login"}>
+                <LoginButton buttonName={"login"} />
+              </Link>
+            </span>
+            <span className='mx-2'>
+              <ThemeChanger />
+            </span>
+            <div className="sm:hidden">
+              {/* Mobile menu button */}
+              <button onClick={toggleMenu} className="dark:text-white hover:text-gray-300 my-2.5 mx-1 focus:outline-none text-xl" >
+                {isOpen ? (<AiOutlineClose />) : (<AiOutlineMenu />)}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="sm:hidden ">
+          <div className="px-2 pt-2 pb-3 space-y-1 flex justify-between">
+            <Link href="/" className="tracking-wide dark:text-white font-semibold hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">Home</Link>
+            <Link href="/about" className="tracking-wide dark:text-white font-semibold hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">About</Link>
+            <Link href="/services" className="tracking-wide dark:text-white font-semibold hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">Services</Link>
+            <Link href="/strategies" className="tracking-wide dark:text-white font-semibold hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">Strategies</Link>
+            <Link href="/contact" className="tracking-wide dark:text-white font-semibold hover:shadow-md px-1 rounded-sm hover: hover:border-b-2 border-b-pink-400">Contact</Link>
+
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}
 
 export default Navbar;
