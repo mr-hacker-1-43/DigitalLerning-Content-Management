@@ -3,7 +3,7 @@ import AnimatedButton from '@/components/AnimatedButton'
 const Contact = () => {
   return (
     <>
-      <section className="text-gray-600 body-font relative py-14">
+      <section className="text-gray-600 body-font relative py-14 h-[71vh] sm:h-[80vh]">
         <div className="container px-5 py-auto mx-auto">
           <div className="flex flex-col text-center w-full mb-8">
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-3 dark:text-gray-200 text-gray-900">Contact Us</h1>

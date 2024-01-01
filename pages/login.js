@@ -1,13 +1,12 @@
 import AnimatedButton from '@/components/AnimatedButton'
+import BgHexaAnimation from '@/components/BgHexaAnimation'
 import Link from 'next/link'
-import React from 'react'
 
 const login = () => {
   return (
-    <>
-      <div className="w-full h-[80vh] mx-auto max-w-md py-32">
+      <>
+      <div className="w-full h-[80vh] mx-auto max-w-md py-3">
         <h1 className='font-bold text-3xl my-8 uppercase text-center'>login</h1>
-        <p></p>
         <form className="bg-white dark:bg-gray-500 shadow drop-shadow-md shadow-pink-400 rounded p-8 mb-4">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-white" htmlFor="username">Username</label>
@@ -22,11 +21,12 @@ const login = () => {
           </div>
           <div className="flex items-center justify-between mx-5">
             <AnimatedButton buttonName={"login"} />
-            <Link className="inline-block align-baseline font-bold text-sm dark:text-pink-100 text-gray-400 hover:text-pink-900 dark:hover:text-pink-900 " href="#">
+            <Link className="inline-block align-baseline font-bold text-sm dark:text-pink-100 text-gray-400 hover:text-pink-900 dark:hover:text-pink-900 " href="/forget">
               Forgot Password?
             </Link>
           </div>
         </form>
+      <BgHexaAnimation/>
       </div>
     </>
   )
