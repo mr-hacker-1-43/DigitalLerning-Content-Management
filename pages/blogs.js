@@ -1,27 +1,20 @@
-import React from 'react'
-import BlogPost from '../components/BlogPost';
-import Link from 'next/link';
+// pages/blog.js
+import BlogCard from '../components/BlogCard';
 
 const blogPosts = [
-  { id: 1, title: 'Understanding Stock Market Basics', snippet: 'Learn the fundamentals of the stock market...' },
+  { id: 1, title: 'Understanding Stock Market Basics', snippet: 'Learn the fundamentals of the stock market...', link: '/blog/1' },
   // Add more blog posts here
 ];
 
-const blogs = () => {
+export default function Blog() {
   return (
-    <div>
-      <h1>Blog</h1>
-      <ul>
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold mb-6">Blog</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {blogPosts.map(post => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
-            <p>{post.snippet}</p>
-            <Link href={`/blog/${post.title}`}><p>Read More</p></Link>
-          </li>
+          <BlogCard key={post.id} title={post.title} snippet={post.snippet} link={post.link} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
-
-export default blogs
