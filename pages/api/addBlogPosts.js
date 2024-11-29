@@ -1,24 +1,27 @@
-import connectToDatabase from "@/lib/mongoose";
-import Blog from "@/models/Blogs";
+import connectToDatabase from '../../lib/mongoose';
+import Blogs from '../../models/Blogs';
 
 export default async function handler(req, res) {
-  const { method } = req;
-  
-// console.log(req);
   await connectToDatabase();
 
-  switch (method) {
-    case 'POST':
-      try {
-        const blogs = req.body; // expecting an array of blog posts
-        const createdBlogs = await Blog.insertMany(blogs);
-        res.status(201).json({ success: true, data: createdBlogs });
-      } catch (error) {
-        res.status(400).json({ success: false, error: error.message });
+  if (req.method === 'POST') {
+    const posts = req.body;
+
+    if (!Array.isArray(posts) || posts.length === 0) {
+      return res.status(400).json({ message: 'An array of posts is required' });
+    }
+    for (const post of posts) {
+      if (!post.title || !post.content || !post.slug || !post.author) {
+        return res.status(400).json({ message: 'Invalide input, some fields are required' });
       }
-      break;
-    default:
-      res.status(405).json({ success: false, error: 'Method not allowed' });
-      break;
+    }
+    try {
+      const result = await Blogs.insertMany(posts);
+          res.status(201).json(result);
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to create posts', error });
+    }
+  } else {
+    res.status(405).json({ message: 'Method not allowed' });
   }
 }
